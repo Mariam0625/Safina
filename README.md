@@ -34,10 +34,10 @@ See full license details:
 
 This project was created by the following team members as part of the startAD AI for Good competition:
 
-- **[Mariam Alamoodi]** — AI/ML Architecture, Voice Processing Logic
-- **[Fotoun Shaqra]** — Frontend Development, Visual Journey Map UI  
-- **[Ali Kattan]** — Product Strategy, User Research
-- **[Mazen Tahhan]** — Content & Cultural Adaptation, Hikaya Hub Stories  
+- **[Mariam Alamoodi]** — API Integration, LLM & Voice AI (Arabic dialect processing, emotional inference)
+- **[Fotoun Shaqra]** — User Interface Design, Dataset Sourcing & Curation, AI/ML Development
+- **[Ali Kattan]** — Business Strategy, Go-to-Market Roadmap, Sustainable Monetization, GCC Cultural-Economic Alignment
+- **[Mazen Tahhan]** — Front end Development, Core Feature Ideation, Third-Party App Integration Coordination
 
 *All team members contributed equally to ideation, user interviews, and solution design.*
 
