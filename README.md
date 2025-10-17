@@ -74,6 +74,5 @@ Existing mental wellness apps are often **English-dominant, Western-framed, and 
 - **Hikaya Hub**: Animated stories from young Gulf women who’ve been there  
 - **Resilience Pathway**: Track job applications + emotional milestones  
 - **Localized Opportunity Radar**: Women-friendly internships, workshops, mentorship  
-- **Gentle Onboarding**: Start in seconds — no login, no English, no judgment  
 
 > The app icon, notifications, and interface are designed to be **discreet and culturally familiar** — so users can engage safely, even in shared households.
