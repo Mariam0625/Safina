@@ -3,11 +3,11 @@
 
 > “Safina” (سفينة) means **“ship”** in Arabic — a vessel that carries you through uncertainty with grace, direction, and care.
 
-Built for Emirati and GCC youth navigating the emotional seas of career transitions, Safina offers **anonymous, voice-first, non-clinical support** that speaks your dialect, honors your values, and helps you grow — without judgment.
+Built for Emirati and GCC youth, especially women in underserved UAE communitiees, navigating the emotional seas of career transitions, Safina offers **anonymous, voice-first, non-clinical support** that speaks your dialect, honors your values, and helps you grow — without judgment.
 
 🏆 **Submitted to**: startAD AI for Good – MindForward Challenge (Abdullah Al Ghurair Foundation)  
 🌍 **Region**: UAE & KSA  
-🔐 **Privacy-first**: No email, no phone, no tracking.
+🔐 **Privacy-first**: Zero personal data collection. 100% Arabic interface (Gulf dialect + MSA)
 
 ---
 
@@ -34,9 +34,9 @@ See full license details:
 
 This project was created by the following team members as part of the startAD AI for Good competition:
 
-- **[Mariam Alamoodi]** — Product Strategy, User Research, Human-Centered Design  
-- **[Fotoun Shaqra]** — AI/ML Architecture, Voice Processing Logic  
-- **[Ali Kattan]** — Frontend Development, Visual Journey Map UI  
+- **[Mariam Alamoodi]** — AI/ML Architecture, Voice Processing Logic
+- **[Fotoun Shaqra]** — Frontend Development, Visual Journey Map UI  
+- **[Ali Kattan]** — Product Strategy, User Research
 - **[Mazen Tahhan]** — Content & Cultural Adaptation, Hikaya Hub Stories  
 
 *All team members contributed equally to ideation, user interviews, and solution design.*
@@ -50,7 +50,30 @@ This project was created by the following team members as part of the startAD AI
 We designed Safina to be **accessible, replicable, and extendable** for future teams, researchers, or NGOs working on youth mental well-being in the GCC.
 
 ### How to Set Up & Run (MVP Prototype)
-1. Clone the repo:  
-   ```bash
-   git clone https://github.com/your-username/Safina.git
-   cd Safina
+
+---
+
+## 🎯 Problem We Solve
+
+Young women in the GCC face unique challenges:
+- **Stigma** around expressing stress or doubt  
+- **Emotional suppression** to avoid burdening families  
+- **Gendered expectations** that limit career exploration (“Why not become a teacher?”)  
+- **Lack of Arabic-first digital tools** that understand their cultural reality  
+- **Isolation** during job searches or academic pressure  
+
+Existing mental wellness apps are often **English-dominant, Western-framed, and feel impersonal**.
+
+**Safina bridges this gap** with AI that speaks their **language, honors their values, and protects their privacy**.
+
+---
+
+## 🌟 Key Features (All in Arabic)
+- **Voice Journaling** in Emirati/Gulf dialect — no typing needed  
+- **Visual Journey Map**: Watch resilience grow as a flower or wave  
+- **Hikaya Hub**: Animated stories from young Gulf women who’ve been there  
+- **Resilience Pathway**: Track job applications + emotional milestones  
+- **Localized Opportunity Radar**: Women-friendly internships, workshops, mentorship  
+- **Gentle Onboarding**: Start in seconds — no login, no English, no judgment  
+
+> The app icon, notifications, and interface are designed to be **discreet and culturally familiar** — so users can engage safely, even in shared households.
