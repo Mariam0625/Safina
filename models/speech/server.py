@@ -4,7 +4,7 @@ from flask import Flask, request, jsonify, send_from_directory
 import openai
 
 # Load OpenAI API key from environment variable
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = os.getenv("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")
 if not openai.api_key:
     raise RuntimeError("❌ Please set your OPENAI_API_KEY environment variable.")
 
@@ -38,7 +38,7 @@ def transcribe_and_reply():
         chat_response = openai.Chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": "أنت مساعد مفيد. جاوب بالعربية."},
+                {"role": "system", "content": " أنت مساعد مفيد. جاوب بالعربية الاماراتيه."},
                 {"role": "user", "content": transcription}
             ],
             max_tokens=300
