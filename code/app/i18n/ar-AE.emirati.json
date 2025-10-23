@@ -1,0 +1,28 @@
+{
+  "meta": { "locale": "ar-AE", "dialect": "Emirati", "rtl": true },
+  "ui_words": {
+    "checkin_hint": "تكلم من قلبك…",
+    "micro_action": "خطوة صغيرة",
+    "reframing_prompt": "وش تعلمت؟ وش الفوز الصغير اليوم؟"
+  },
+  "reframes": [
+    "كل يوم وله طاقة، والراحة بعد إنجاز.",
+    "مو لازم كل شي يصير اليوم — خذها حبة حبة.",
+    "الله ما يكلّف نفسًا إلا وسعها — ولا على قلبك هم."
+  ],
+  "micro_actions": [
+    "عدّل سطرين في خطاب التقديم — خمس دقايق بس.",
+    "اكتب ثلاثة أشياء ممتن لها اليوم.",
+    "خذ نفس عميق 4-4-6 لخمس مرات."
+  ],
+  "badges": {
+    "COURAGEOUS": "متقدم شجاع",
+    "FEEDBACK": "باحث عن التغذية الراجعة",
+    "PERSISTENT": "مثابر"
+  },
+  "helplines_uae": [
+    { "name": "National Ambulance", "phone": "998", "region": "UAE", "languages": ["العربية", "English"] },
+    { "name": "Police", "phone": "999", "region": "UAE", "languages": ["العربية", "English"] },
+    { "name": "Mental Support Line - Estijaba (Dept. of Health Abu Dhabi)", "phone": "8001717", "region": "Abu Dhabi", "languages": ["العربية", "English"] }
+  ]
+}
