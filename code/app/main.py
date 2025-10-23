@@ -9,6 +9,7 @@ app.include_router(checkins.router)
 app.include_router(journal.router)
 app.include_router(pathway.router)
 app.include_router(content.router)
+app.include_router(assistant.router)
 
 @app.get("/system/ping")
 def ping():
