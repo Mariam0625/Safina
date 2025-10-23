@@ -34,10 +34,10 @@ See full license details:
 
 This project was created by the following team members as part of the startAD AI for Good competition:
 
-- **[Mariam Alamoodi]** — API Integration, LLM & Voice AI (Arabic dialect processing, emotional inference)
+- **[Mariam Alamoodi]** — API Integration, LLM & Voice AI (Arabic dialect processing, emotional inference), Back end Development
 - **[Fotoun Shaqra]** — User Interface Design, Dataset Sourcing & Curation, AI/ML Development
 - **[Ali Kattan]** — Business Strategy, Go-to-Market Roadmap, Sustainable Monetization, GCC Cultural-Economic Alignment
-- **[Mazen Tahhan]** — Front end Development, Core Feature Ideation, Third-Party App Integration Coordination
+- **[Mazen Tahhan]** — Front end Development, Core Feature Ideation
 
 *All team members contributed equally to ideation, user interviews, and solution design.*
 
@@ -50,6 +50,180 @@ This project was created by the following team members as part of the startAD AI
 We designed Safina to be **accessible, replicable, and extendable** for future teams, researchers, or NGOs working on youth mental well-being in the GCC.
 
 ### How to Set Up & Run (MVP Prototype)
+
+## 🧩 Prerequisites
+
+Make sure you have the following installed:
+
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/)
+- [Node.js 18+](https://nodejs.org/)
+- [Python 3.11+](https://www.python.org/)
+- [OpenAI API Key](https://platform.openai.com/account/api-keys)
+
+---
+
+## 🚀 1. Backend Setup (FastAPI)
+
+### Step 1 – Move to backend directory
+```bash
+cd code/backend
+````
+
+### Step 2 – Create and edit environment file
+
+```bash
+cp .env.example .env
+```
+
+Open `.env` in your editor and fill in your OpenAI credentials:
+
+```env
+OPENAI_API_KEY=sk-your-api-key
+OPENAI_MODEL=gpt-4.1-mini
+JWT_SECRET=choose_a_secure_secret
+```
+
+You can keep default values for PostgreSQL, Redis, and MinIO unless you are deploying remotely.
+
+---
+
+### Step 3 – Run backend services
+
+```bash
+docker compose up -d --build
+```
+
+This will start:
+
+* FastAPI backend → [http://localhost:8000](http://localhost:8000)
+* PostgreSQL → port 5432
+* Redis → port 6379
+* MinIO (object storage) → [http://localhost:9001](http://localhost:9001)
+> (Local-only S3-compatible storage for development. Default credentials are set in `docker-compose.yml` and used only on your machine.  
+  When deploying publicly, update `S3_ACCESS_KEY` and `S3_SECRET_KEY` in your `.env` with secure unique values.)
+
+---
+
+### Step 4 – Initialize the database
+
+```bash
+docker exec -it $(docker ps -qf name=db) \
+  psql -U safina -d safina -f /srv/schema.sql
+```
+
+---
+
+## 🎨 2. Frontend Setup
+
+### Step 1 – Move to frontend directory
+
+```bash
+cd ../frontend
+```
+
+### Step 2 – Install dependencies
+
+```bash
+npm install
+```
+
+### Step 3 – Run development server
+
+```bash
+npm run dev
+```
+
+Frontend will run at:
+👉 [http://localhost:3000](http://localhost:3000)
+Make sure it connects to the backend (`http://localhost:8000`).
+
+---
+
+## ☁️ 3. Deployment Options
+
+### 🅰️ Deploy on Render
+
+1. Push your repository to GitHub.
+2. Create a **PostgreSQL** service on Render.
+3. Create a **Web Service** using Docker → point it to `code/backend/Dockerfile`.
+4. Add your `.env` variables (OpenAI key, JWT secret, etc.).
+5. Deploy the **frontend** as a static site or as a separate service.
+
+### 🅱️ Deploy on Fly.io
+
+1. Install Fly CLI:
+
+```bash
+brew install flyctl
+```
+
+2. Launch your backend app:
+
+```bash
+cd code/backend
+flyctl launch
+```
+
+3. Add secrets:
+
+```bash
+flyctl secrets set OPENAI_API_KEY=sk-your-key JWT_SECRET=supersecret
+```
+
+4. Deploy:
+
+```bash
+flyctl deploy
+```
+
+5. Access your API at `https://safina.fly.dev`
+
+### 🅲️ Manual VPS Deployment
+
+1. SSH into your server.
+2. Clone the repository.
+3. Install Docker and Docker Compose.
+4. Copy `.env` and set your secrets.
+5. Run:
+
+```bash
+docker compose up -d --build
+```
+
+6. Enable HTTPS using **Caddy** or **Nginx**.
+
+---
+
+## 🔒 4. Security Notes
+
+* Anonymous by design — no personal data collected.
+* Always run over **HTTPS** in production.
+* Keep your **OpenAI API key** and **JWT secret** private.
+* Back up your PostgreSQL data regularly.
+* Rotate your keys and secrets periodically.
+
+---
+
+## ✅ Quick Recap
+
+```bash
+# backend
+cd code/backend
+cp .env.example .env
+docker compose up -d --build
+docker exec -it $(docker ps -qf name=db) psql -U safina -d safina -f /srv/schema.sql
+
+# frontend
+cd ../frontend
+npm install
+npm run dev
+```
+
+Then open:
+
+* **Backend API Docs:** [http://localhost:8000/docs](http://localhost:8000/docs)
+* **Frontend App:** [http://localhost:3000](http://localhost:3000)
 
 ---
 
