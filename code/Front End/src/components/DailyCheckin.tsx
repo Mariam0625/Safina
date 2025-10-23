@@ -1,3 +1,4 @@
+import { api } from "@/lib/api";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -18,25 +19,46 @@ const DailyCheckin = () => {
     { icon: CloudRain, key: "heavy", color: "text-gray-500" },
   ];
 
-  const handleRecord = () => {
-    setIsRecording(!isRecording);
-    if (!isRecording) {
-      toast.success(t('listeningHeart'), {
-        description: t('speakNaturally'),
+ const handleRecord = async () => {
+  setIsRecording(!isRecording);
+  if (!isRecording) {
+    toast.success(t("listeningHeart"), { description: t("speakNaturally") });
+  } else {
+    toast.success(t("thankSharing"), { description: t("feelingsMatter") });
+    // send a “voice check-in completed” event
+    try {
+      await api("/assistant/reply", {
+        method: "POST",
+        body: JSON.stringify({
+          text: "voice note recorded", // or actual transcript
+          context: { screen: "checkin" },
+        }),
       });
-    } else {
-      toast.success(t('thankSharing'), {
-        description: t('feelingsMatter'),
-      });
+    } catch (e) {
+      console.error(e);
     }
-  };
+  }
+};
 
-  const handleEmojiSelect = (key: string) => {
-    setSelectedEmoji(key);
-    toast.success(t('feelingNoted'), {
-      description: `${t('youreFeeling')} ${t(key)} ${t('today')}.`,
+
+const handleEmojiSelect = async (key: string) => {
+  setSelectedEmoji(key);
+  toast.success(t("feelingNoted"), {
+    description: `${t("youreFeeling")} ${t(key)} ${t("today")}.`,
+  });
+
+  try {
+    // Send check-in to backend with current locale
+    await api("/checkins", {
+      method: "POST",
+      body: JSON.stringify({ emoji: key }),
     });
-  };
+  } catch (err) {
+    console.error(err);
+    toast.error("Couldn't save check-in.");
+  }
+};
+
 
   return (
     <div className="space-y-6 animate-fade-in">
