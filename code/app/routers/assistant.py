@@ -7,12 +7,13 @@ router = APIRouter(prefix="/assistant", tags=["assistant"])
 
 class AskIn(BaseModel):
     text: str
-    context: Optional[Dict[str, Any]] = None  # e.g., {"screen":"checkin"} | {"screen":"pathway"}
+    # You can send locale = "ar-AE" or "en-US" (defaults to ar-AE if not provided)
+    locale: Optional[str] = None
+    context: Optional[Dict[str, Any]] = None  # e.g., {"screen":"checkin"}
 
 @router.post("/reply")
 def ai_reply(payload: AskIn):
-    """
-    Emirati-dialect, culturally-sensitive LLM reply + micro-action.
-    Crisis-first: if high-risk text is detected, returns safety message + UAE helplines.
-    """
-    return respond(payload.text, payload.context or {})
+    ctx = payload.context or {}
+    if payload.locale:
+        ctx["locale"] = payload.locale
+    return respond(payload.text, ctx)
