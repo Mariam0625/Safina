@@ -1,12 +1,16 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from "react";
 
-type Language = 'en' | 'ar';
+type UILanguage = "en" | "ar";                 // UI toggle
+type Locale = "en-US" | "ar-AE";               // Backend locale
 
 interface LanguageContextType {
-  language: Language;
-  setLanguage: (lang: Language) => void;
+  language: UILanguage;                        // "en" | "ar"
+  setLanguage: (lang: UILanguage) => void;
   t: (key: string) => string;
+  locale: Locale;                              // "en-US" | "ar-AE" (for backend)
 }
+
+const toLocale = (lang: UILanguage): Locale => (lang === "ar" ? "ar-AE" : "en-US");
 
 const translations = {
   en: {
@@ -75,97 +79,123 @@ const translations = {
     recordingTapStop: "Recording... Tap to stop",
   },
   ar: {
-    welcome: "مرحبا. أنا سفينه.",
-    welcomeSub: "ما تحتاج اسم. بس قولي شلون حاس قلبك اليوم.",
-    startJourney: "ابدا رحلتك",
-    howFeeling: "شو احساسك اليوم؟",
+    // Hero & onboarding
+    welcome: "هلا، أنا سفينة.",
+    welcomeSub: "ما نحتاج اسم. خبّرني بس شحال قلبك اليوم.",
+    startJourney: "ابدأ رحلتك",
+  
+    // Nav & sections
+    howFeeling: "شو إحساسك اليوم؟",
     dailyCheckin: "تسجيل يومي",
     yourJourney: "رحلتك",
-    resiliencePathway: "طريق القوة",
+    resiliencePathway: "درب المرونة",
     stories: "قصص",
     resources: "موارد",
+  
+    // Inputs
     speakHeart: "ارمس من قلبك...",
-    emojiFeeling: "أو اختار رمز تعبيري",
+    emojiFeeling: "أو اختر إيموجي",
+  
+    // Dashboard bits
     blossomMap: "زهرتك",
-    resilience: "القوة",
-    growth: "رحلة التطور",
+    resilience: "المرونة",
+    growth: "رحلة النمو",
+  
+    // Stories list
     realStories: "قصص حقيقية",
-    anonymousVoices: "من شباب مثلك",
+    anonymousVoices: "من شباب وبنات مثلك",
+  
+    // Opportunities
     opportunities: "فرص",
-    forYou: "مخصصة لك",
-    jobSearchJourney: "رحلة التدوير",
-    trackProgress: "تتبع طلباتك ومقابلاتك وإنجازاتك",
-    applications: "الطلبات",
-    interviews: "المقابلات",
-    rejections: "الرفض",
-    offers: "العروض",
-    addMilestone: "زد إنجاز",
-    yourBadges: "اوسمتك",
-    reframingPrompt: "غير نظرتك",
-    whatLearned: "شو تعلمت؟ شو إنجاز صغير سويته؟",
+    forYou: "مخصّصة لك",
+  
+    // Pathway
+    jobSearchJourney: "رحلة تدوير الشغل",
+    trackProgress: "تابِع التقديمات والمقابلات ومحطات الشعور",
+    applications: "تقديمات",
+    interviews: "مقابلات",
+    rejections: "رفض",
+    offers: "عروض",
+    addMilestone: "أضِف محطة",
+  
+    // Badges & prompts
+    yourBadges: "أوسمتك",
+    reframingPrompt: "غيّر النظرة",
+    whatLearned: "شو تعلّمت؟ وش الفوز الصغير اليوم؟",
     microAction: "خطوة صغيرة",
-    tweakCoverLetter: "يالله نعدل خطاب التقديم سوا - ٥ دقايق بس.",
+    tweakCoverLetter: "خلّنا نعدّل خطاب التقديم شوي — ٥ دقايق بس.",
     viewPrompt: "شوف الاقتراح",
-    takeAction: "سو اكشن",
-    courageousApplicant: "متقدم شجاع",
-    feedbackSeeker: "يدور ملاحظات",
+    takeAction: "خذ خطوة",
+  
+    // Badge names
+    courageousApplicant: "متقدّم شجاع",
+    feedbackSeeker: "يدوّر الملاحظات",
     persistentDreamer: "حالم مثابر",
     resilientSpirit: "روح قوية",
-    grateful: "ممتن",
+  
+    // Feelings (keep short for buttons)
+    grateful: "ممتنّ",
     happy: "مبسوط",
-    okay: "عادي",
-    struggling: "تعبان",
-    heavy: "ثقيل",
+    okay: "تمام",
+    struggling: "مضغوط",
+    heavy: "ثقيل الخاطر",
+  
     // Story titles
     storyTitle1: "من ١٠ رفضات لوظيفة في أدنوك",
-    storyTitle2: "أوازن بين العيلة وحلمي بالذكاء الاصطناعي",
+    storyTitle2: "أوازن بين العيلة وحلمي في الذكاء الاصطناعي",
     storyTitle3: "لقيت صوتي بعد القلق",
+  
     // Story themes
     themeHope: "أمل",
     themeCourage: "شجاعة",
-    themeGrowth: "تطور",
+    themeGrowth: "تطوّر",
+  
     // Durations
-    duration2min: "٢ دقيقة",
+    duration2min: "دقيقتين",
     duration1min: "دقيقة ونص",
-    // Buttons and actions
-    shareStory: "شارك قصتك (مجهول)",
-    // Toast messages
+  
+    // Actions & toasts
+    shareStory: "شارك قصتك (بدون اسم)",
     listeningHeart: "أسمعك...",
-    speakNaturally: "احكي براحتك. خذ وقتك.",
-    thankSharing: "شكراً على المشاركة",
-    feelingsMatter: "مشاعرك مهمة.",
-    feelingNoted: "سجلنا إحساسك",
-    youreFeeling: "حاسك",
+    speakNaturally: "ارمس على راحتك، خذ وقتك.",
+    thankSharing: "مشكور/ة على المشاركة",
+    feelingsMatter: "مشاعرك تهمّنا.",
+    feelingNoted: "سجّلنا إحساسك",
+    youreFeeling: "حاس/ة إنك",
     today: "اليوم",
-    recordingTapStop: "يسجل... اضغط عشان توقف",
+    recordingTapStop: "قاعدين نسجّل… اضغط لإيقاف"
   }
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<Language>('en');
+  const [language, setLanguage] = useState<UILanguage>(() => {
+    // initial load from localStorage (fallback to 'ar' to match backend default)
+    return (localStorage.getItem("language") as UILanguage) || "ar";
+  });
 
+  // keep <html> dir/lang + persist choice
   useEffect(() => {
-    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+    localStorage.setItem("language", language);
+    document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
     document.documentElement.lang = language;
   }, [language]);
 
-  const t = (key: string) => {
-    return translations[language][key as keyof typeof translations.en] || key;
-  };
+  const t = (key: string) =>
+    (translations[language] as any)[key] ?? key;
+
+  const locale: Locale = toLocale(language);
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, locale }}>
       {children}
     </LanguageContext.Provider>
   );
 };
 
 export const useLanguage = () => {
-  const context = useContext(LanguageContext);
-  if (!context) {
-    throw new Error('useLanguage must be used within LanguageProvider');
-  }
-  return context;
+  const ctx = useContext(LanguageContext);
+  if (!ctx) throw new Error("useLanguage must be used within LanguageProvider");
+  return ctx;
 };
