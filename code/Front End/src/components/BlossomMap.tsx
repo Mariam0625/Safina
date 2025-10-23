@@ -1,24 +1,56 @@
+import { useEffect, useMemo, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Flower2, TrendingUp, Award } from "lucide-react";
+import { api } from "@/lib/api";
 
-const BlossomMap = () => {
+type Petal = { id: number; size: "large" | "medium" | "small"; color: string; rotation: number };
+type BlossomResponse = {
+  petals_grown: number;          // e.g., 5
+  growth_score: number;          // e.g., 7
+  resilience_badges: number;     // e.g., 3
+  petals?: Petal[];              // optional; backend can send custom layout
+};
+
+export default function BlossomMap() {
   const { t } = useLanguage();
 
-  // Mock data for visualization
-  const petals = [
-    { id: 1, size: 'large', color: 'bg-pink-400', rotation: 0 },
-    { id: 2, size: 'large', color: 'bg-pink-300', rotation: 72 },
-    { id: 3, size: 'medium', color: 'bg-pink-200', rotation: 144 },
-    { id: 4, size: 'small', color: 'bg-pink-100', rotation: 216 },
-    { id: 5, size: 'small', color: 'bg-gray-200', rotation: 288 },
+  // defaults (same visuals you had)
+  const fallbackPetals: Petal[] = [
+    { id: 1, size: "large", color: "bg-pink-400", rotation: 0 },
+    { id: 2, size: "large", color: "bg-pink-300", rotation: 72 },
+    { id: 3, size: "medium", color: "bg-pink-200", rotation: 144 },
+    { id: 4, size: "small", color: "bg-pink-100", rotation: 216 },
+    { id: 5, size: "small", color: "bg-gray-200", rotation: 288 },
   ];
+
+  const [data, setData] = useState<BlossomResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // fetch from backend (localized via api helper)
+  useEffect(() => {
+    let mounted = true;
+    setLoading(true);
+    api("/progress/blossom")
+      .then((res) => mounted && setData(res))
+      .catch(() => mounted && setData(null)) // fallback to local visuals
+      .finally(() => mounted && setLoading(false));
+    return () => {
+      mounted = false;
+    };
+    // refetch when language changes (in case backend localizes captions later)
+  }, [localStorage.getItem("language")]);
+
+  const petals = useMemo(() => data?.petals ?? fallbackPetals, [data]);
 
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="text-center space-y-2">
-        <h2 className="text-2xl font-bold text-foreground">{t('yourJourney')}</h2>
-        <p className="text-muted-foreground">Watch yourself bloom</p>
+        <h2 className="text-2xl font-bold text-foreground">{t("yourJourney")}</h2>
+        <p className="text-muted-foreground">
+          {/* you can move this string into translations later if you want */}
+          Watch yourself bloom
+        </p>
       </div>
 
       {/* Visual flower map */}
@@ -33,10 +65,8 @@ const BlossomMap = () => {
           {petals.map((petal) => (
             <div
               key={petal.id}
-              className={`absolute inset-0 m-auto origin-center transition-smooth hover:scale-110`}
-              style={{
-                transform: `rotate(${petal.rotation}deg) translateY(-80px)`,
-              }}
+              className="absolute inset-0 m-auto origin-center transition-smooth hover:scale-110"
+              style={{ transform: `rotate(${petal.rotation}deg) translateY(-80px)` }}
             >
               <div
                 className={`w-16 h-20 ${petal.color} rounded-full shadow-soft animate-float`}
@@ -51,7 +81,7 @@ const BlossomMap = () => {
 
         {/* Growth caption */}
         <p className="text-center text-sm text-muted-foreground mt-6">
-          5 petals grown this week 🌸
+          {(data?.petals_grown ?? 5)} petals grown this week 🌸
         </p>
       </Card>
 
@@ -63,8 +93,8 @@ const BlossomMap = () => {
               <TrendingUp className="w-6 h-6 text-primary" />
             </div>
           </div>
-          <p className="text-2xl font-bold text-foreground">7</p>
-          <p className="text-sm text-muted-foreground">{t('growth')}</p>
+          <p className="text-2xl font-bold text-foreground">{data?.growth_score ?? 7}</p>
+          <p className="text-sm text-muted-foreground">{t("growth")}</p>
         </Card>
 
         <Card className="p-4 shadow-card text-center space-y-2 hover:shadow-soft transition-smooth">
@@ -73,12 +103,10 @@ const BlossomMap = () => {
               <Award className="w-6 h-6 text-accent" />
             </div>
           </div>
-          <p className="text-2xl font-bold text-foreground">3</p>
-          <p className="text-sm text-muted-foreground">{t('resilience')}</p>
+          <p className="text-2xl font-bold text-foreground">{data?.resilience_badges ?? 3}</p>
+          <p className="text-sm text-muted-foreground">{t("resilience")}</p>
         </Card>
       </div>
     </div>
   );
-};
-
-export default BlossomMap;
+}
