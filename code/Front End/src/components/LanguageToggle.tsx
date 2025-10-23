@@ -1,21 +1,21 @@
-import { Languages } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const LanguageToggle = () => {
+export function LanguageToggle() {
   const { language, setLanguage } = useLanguage();
-
   return (
-    <Button
-      variant="ghost"
-      size="sm"
-      onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
-      className="gap-2"
-    >
-      <Languages className="h-4 w-4" />
-      <span>{language === 'en' ? 'عربي' : 'English'}</span>
-    </Button>
+    <div className="flex gap-2">
+      <button
+        className={`px-3 py-1 rounded-full ${language === "en" ? "bg-teal-600 text-white" : "bg-gray-100"}`}
+        onClick={() => setLanguage("en")}
+      >
+        English
+      </button>
+      <button
+        className={`px-3 py-1 rounded-full ${language === "ar" ? "bg-teal-600 text-white" : "bg-gray-100"}`}
+        onClick={() => setLanguage("ar")}
+      >
+        عربي
+      </button>
+    </div>
   );
-};
-
-export default LanguageToggle;
+}
