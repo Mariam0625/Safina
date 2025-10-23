@@ -1,0 +1,28 @@
+{
+  "meta": { "locale": "en-US", "dialect": "English", "rtl": false },
+  "ui_words": {
+    "checkin_hint": "Speak from your heart…",
+    "micro_action": "Micro-action",
+    "reframing_prompt": "What did you learn? What’s one tiny win?"
+  },
+  "reframes": [
+    "Not every day needs to be heavy — small steps count.",
+    "You don't have to do it all today — one thing at a time.",
+    "Your effort matters, even when energy is low."
+  ],
+  "micro_actions": [
+    "Edit two lines in your cover letter — just 5 minutes.",
+    "Write three things you’re grateful for today.",
+    "Take 5 rounds of 4-4-6 breathing."
+  ],
+  "badges": {
+    "COURAGEOUS": "Courageous Applicant",
+    "FEEDBACK": "Feedback Seeker",
+    "PERSISTENT": "Persistent Dreamer"
+  },
+  "helplines_uae": [
+    { "name": "National Ambulance", "phone": "998", "region": "UAE", "languages": ["Arabic", "English"] },
+    { "name": "Police", "phone": "999", "region": "UAE", "languages": ["Arabic", "English"] },
+    { "name": "Mental Support Line - Estijaba (Dept. of Health Abu Dhabi)", "phone": "8001717", "region": "Abu Dhabi", "languages": ["Arabic", "English"] }
+  ]
+}
